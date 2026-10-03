@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Applications for Drive - CPC</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+    
+    <div class="container">
+        <a th:href="@{/coordinator/placement-drives}" style="text-decoration: none;">&larr; Back to Drives</a>
+        
+        <h2 class="mt-1">Applications for <span th:text="${drive.companyName}"></span> - <span th:text="${drive.jobRole}"></span></h2>
+        
+        <div th:if="${success}" class="alert alert-success mt-1" th:text="${success}"></div>
+        
+        <table class="mt-1">
+            <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th>Branch</th>
+                    <th>CGPA</th>
+                    <th>Applied Date</th>
+                    <th>Status</th>
+                    <th>Update Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="app : ${applications}">
+                    <td th:text="${app.student.user.name}">Name</td>
+                    <td th:text="${app.student.branch}">Branch</td>
+                    <td th:text="${app.student.cgpa}">CGPA</td>
+                    <td th:text="${#temporals.format(app.appliedDate, 'dd-MM-yyyy HH:mm')}">Date</td>
+                    <td>
+                        <strong th:text="${app.status}" 
+                                th:classappend="${app.status.name() == 'REJECTED' ? 'alert-error' : (app.status.name() == 'SELECTED' ? 'alert-success' : 'alert-info')}"
+                                style="padding: 0.2rem 0.5rem; border-radius: 3px;">Status</strong>
+                    </td>
+                    <td>
+                        <form th:action="@{/coordinator/applications/update-status}" method="post" style="display:flex; gap:0.5rem;">
+                            <input type="hidden" name="applicationId" th:value="${app.id}">
+                            <input type="hidden" name="driveId" th:value="${drive.id}">
+                            <select name="status" class="form-control" style="padding: 0.3rem;">
+                                <option th:each="statusOpt : ${statuses}" 
+                                        th:value="${statusOpt}" 
+                                        th:text="${statusOpt}"
+                                        th:selected="${statusOpt == app.status}"></option>
+                            </select>
+                            <button type="submit" class="btn" style="padding: 0.3rem 0.8rem;">Update</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr th:if="${applications.empty}">
+                    <td colspan="6" class="text-center">No applications received yet.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

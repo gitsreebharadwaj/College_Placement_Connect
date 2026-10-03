@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Placement Drives - CPC</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+    
+    <div class="container">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h2>Manage Placement Drives</h2>
+            <a th:href="@{/coordinator/placement-drives/new}" class="btn">Create New Drive</a>
+        </div>
+        
+        <div th:if="${success}" class="alert alert-success mt-1" th:text="${success}"></div>
+        
+        <table class="mt-1">
+            <thead>
+                <tr>
+                    <th>Company</th>
+                    <th>Role</th>
+                    <th>Deadline</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="drive : ${drives}">
+                    <td th:text="${drive.companyName}">Company</td>
+                    <td th:text="${drive.jobRole}">Role</td>
+                    <td th:text="${drive.applicationDeadline}">Deadline</td>
+                    <td>
+                        <a th:href="@{/coordinator/applications/{id}(id=${drive.id})}" class="btn">View Apps</a>
+                        <a th:href="@{/coordinator/placement-drives/edit/{id}(id=${drive.id})}" class="btn" style="background:#ffc107; color:#000;">Edit</a>
+                        <a th:href="@{/coordinator/placement-drives/delete/{id}(id=${drive.id})}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this drive? All related applications will be deleted as well.');">Delete</a>
+                    </td>
+                </tr>
+                <tr th:if="${drives.empty}">
+                    <td colspan="4" class="text-center">No placement drives found. Create one!</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

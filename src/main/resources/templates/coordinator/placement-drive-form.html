@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Placement Drive Form - CPC</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+    
+    <div class="container">
+        <a th:href="@{/coordinator/placement-drives}" style="text-decoration: none;">&larr; Back to Drives</a>
+        
+        <div class="card mt-1">
+            <h2 th:text="${drive.id == null ? 'Create New Placement Drive' : 'Edit Placement Drive'}">Drive Form</h2>
+            
+            <form th:action="@{/coordinator/placement-drives/save}" method="post" th:object="${drive}" class="mt-1">
+                <input type="hidden" th:field="*{id}">
+                
+                <div class="details-grid">
+                    <div class="form-group">
+                        <label for="companyName">Company Name</label>
+                        <input type="text" id="companyName" th:field="*{companyName}" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="jobRole">Job Role</label>
+                        <input type="text" id="jobRole" th:field="*{jobRole}" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="ctc">CTC</label>
+                        <input type="text" id="ctc" th:field="*{ctc}" class="form-control">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="location">Location</label>
+                        <input type="text" id="location" th:field="*{location}" class="form-control">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="eligibleBranches">Eligible Branches (Comma separated)</label>
+                        <input type="text" id="eligibleBranches" th:field="*{eligibleBranches}" class="form-control">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="minCgpa">Minimum CGPA required</label>
+                        <input type="number" step="0.01" id="minCgpa" th:field="*{minCgpa}" class="form-control" min="0" max="10">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="maxBacklogs">Max Backlogs Allowed</label>
+                        <input type="number" id="maxBacklogs" th:field="*{maxBacklogs}" class="form-control" min="0">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="requiredGraduationYear">Required Graduation Year</label>
+                        <input type="number" id="requiredGraduationYear" th:field="*{requiredGraduationYear}" class="form-control">
+                    </div>
+                    
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label for="applicationDeadline">Application Deadline</label>
+                        <input type="date" id="applicationDeadline" th:field="*{applicationDeadline}" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label for="description">Job Description</label>
+                        <textarea id="description" th:field="*{description}" class="form-control" rows="4"></textarea>
+                    </div>
+                    
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label for="selectionProcess">Selection Process</label>
+                        <textarea id="selectionProcess" th:field="*{selectionProcess}" class="form-control" rows="3"></textarea>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn mt-1">Save Placement Drive</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+    <nav class="navbar" th:fragment="navbar">
+        <h1>College Placement Connect</h1>
+        <div class="auth-links">
+            <div sec:authorize="hasRole('STUDENT')" style="display:inline;">
+                <a th:href="@{/student/dashboard}">Dashboard</a>
+                <a th:href="@{/student/profile}">Profile</a>
+                <a th:href="@{/student/placement-drives}">Drives</a>
+                <a th:href="@{/student/applications}">My Applications</a>
+            </div>
+            
+            <div sec:authorize="hasRole('PLACEMENT_COORDINATOR')" style="display:inline;">
+                <a th:href="@{/coordinator/dashboard}">Dashboard</a>
+                <a th:href="@{/coordinator/placement-drives}">Manage Drives</a>
+            </div>
+            
+            <span style="margin-left: 2rem;">
+                <span sec:authentication="principal.name"></span> |
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit">Logout</button>
+                </form>
+            </span>
+        </div>
+    </nav>
+</body>
+</html>

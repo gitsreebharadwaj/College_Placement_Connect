@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Dashboard - CPC</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+    
+    <div class="container">
+        <h2>Welcome, <span th:text="${#authentication.principal.name}"></span>!</h2>
+        
+        <div th:if="${student != null and (student.cgpa == null or student.branch == null)}" class="alert alert-info mt-1">
+            Your profile is incomplete! Please update your <a th:href="@{/student/profile}">profile</a> to apply for placement drives.
+        </div>
+
+        <div class="dashboard-stats mt-2">
+            <div class="stat-box">
+                <h3 th:text="${totalDrives}">0</h3>
+                <p>Available Placement Drives</p>
+            </div>
+            <div class="stat-box">
+                <h3 th:text="${totalApplications}">0</h3>
+                <p>My Applications</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

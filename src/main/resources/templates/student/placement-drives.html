@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Placement Drives - CPC</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+    
+    <div class="container">
+        <h2>Available Placement Drives</h2>
+        
+        <table class="mt-1">
+            <thead>
+                <tr>
+                    <th>Company</th>
+                    <th>Role</th>
+                    <th>CTC</th>
+                    <th>Deadline</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="drive : ${drives}">
+                    <td th:text="${drive.companyName}">Company</td>
+                    <td th:text="${drive.jobRole}">Role</td>
+                    <td th:text="${drive.ctc}">CTC</td>
+                    <td th:text="${drive.applicationDeadline}">Deadline</td>
+                    <td>
+                        <a th:href="@{/student/placement-details/{id}(id=${drive.id})}" class="btn">View Details</a>
+                    </td>
+                </tr>
+                <tr th:if="${drives.empty}">
+                    <td colspan="5" class="text-center">No placement drives available right now.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

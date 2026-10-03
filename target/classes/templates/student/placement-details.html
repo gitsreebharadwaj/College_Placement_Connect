@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Placement Drive Details - CPC</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+    
+    <div class="container">
+        <a th:href="@{/student/placement-drives}" style="text-decoration: none;">&larr; Back to Drives</a>
+        
+        <div class="card mt-1">
+            <h2 th:text="${drive.companyName}">Company Name</h2>
+            <h4 th:text="${drive.jobRole}" style="color: #666;">Job Role</h4>
+            
+            <div th:if="${success}" class="alert alert-success mt-1" th:text="${success}"></div>
+            <div th:if="${error}" class="alert alert-error mt-1" th:text="${error}"></div>
+            
+            <div class="details-grid mt-1">
+                <div><strong>CTC:</strong> <span th:text="${drive.ctc}"></span></div>
+                <div><strong>Location:</strong> <span th:text="${drive.location}"></span></div>
+                <div><strong>Eligible Branches:</strong> <span th:text="${drive.eligibleBranches}"></span></div>
+                <div><strong>Required CGPA:</strong> <span th:text="${drive.minCgpa}"></span></div>
+                <div><strong>Max Backlogs Allowed:</strong> <span th:text="${drive.maxBacklogs}"></span></div>
+                <div><strong>Graduation Year:</strong> <span th:text="${drive.requiredGraduationYear}"></span></div>
+                <div><strong>Application Deadline:</strong> <span th:text="${drive.applicationDeadline}"></span></div>
+            </div>
+            
+            <div class="mt-1">
+                <strong>Description:</strong>
+                <p th:text="${drive.description}"></p>
+            </div>
+            
+            <div class="mt-1">
+                <strong>Selection Process:</strong>
+                <p th:text="${drive.selectionProcess}"></p>
+            </div>
+            
+            <div class="card mt-2" style="background: #f8f9fa;">
+                <h3>Eligibility Check</h3>
+                
+                <div th:if="${hasApplied}" class="alert alert-success mt-1">
+                    You have already applied for this drive! View your <a th:href="@{/student/applications}">applications</a>.
+                </div>
+                
+                <div th:unless="${hasApplied}">
+                    <div th:if="${eligibility.eligible}" class="alert alert-success mt-1">
+                        <strong>You are eligible to apply!</strong>
+                        <form th:action="@{/student/apply/{id}(id=${drive.id})}" method="post" class="mt-1">
+                            <button type="submit" class="btn btn-success">Apply Now</button>
+                        </form>
+                    </div>
+                    
+                    <div th:unless="${eligibility.eligible}" class="alert alert-error mt-1">
+                        <strong>You are not eligible:</strong> <span th:text="${eligibility.reason}"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

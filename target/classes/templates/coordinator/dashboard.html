@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Coordinator Dashboard - CPC</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+    
+    <div class="container">
+        <h2>Coordinator Dashboard</h2>
+        
+        <div class="dashboard-stats mt-2">
+            <div class="stat-box">
+                <h3 th:text="${totalDrives}">0</h3>
+                <p>Total Placement Drives</p>
+                <a th:href="@{/coordinator/placement-drives}" class="btn mt-1">Manage Drives</a>
+            </div>
+            <div class="stat-box">
+                <h3 th:text="${totalApplications}">0</h3>
+                <p>Total Student Applications</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

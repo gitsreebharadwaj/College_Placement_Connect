@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Applications - CPC</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+    
+    <div class="container">
+        <h2>My Applications</h2>
+        
+        <table class="mt-1">
+            <thead>
+                <tr>
+                    <th>Company</th>
+                    <th>Role</th>
+                    <th>Applied Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="app : ${applications}">
+                    <td th:text="${app.placementDrive.companyName}">Company</td>
+                    <td th:text="${app.placementDrive.jobRole}">Role</td>
+                    <td th:text="${#temporals.format(app.appliedDate, 'dd-MM-yyyy HH:mm')}">Date</td>
+                    <td>
+                        <strong th:text="${app.status}" 
+                                th:classappend="${app.status.name() == 'REJECTED' ? 'alert-error' : (app.status.name() == 'SELECTED' ? 'alert-success' : 'alert-info')}"
+                                style="padding: 0.2rem 0.5rem; border-radius: 3px;">Status</strong>
+                    </td>
+                </tr>
+                <tr th:if="${applications.empty}">
+                    <td colspan="4" class="text-center">You haven't applied to any drives yet.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
